@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-template-pdb
+  namespace: fusion-api-template
+spec:
+  minAvailable: 0
+  selector:
+    matchLabels:
+      component: api-template-deploy

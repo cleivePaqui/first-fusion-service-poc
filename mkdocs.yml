@@ -1,0 +1,24 @@
+---
+
+docs_dir: docs
+
+site_name: 'Fusion Api Template'
+
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Introduction: tutorials/README.md
+  - How-to Guides:
+      - Introduction: howto/README.md
+      - How to Use This Repository: howto/how-to-use-repo.md
+      - howto/integration-tests.md
+      - Runbook: howto/runbook.md
+  - Reference:
+      - Introduction: reference/README.md
+  - Explanation:
+      - Introduction: explanation/README.md
+  - Decisions:
+      - ADR Index: adr/README.md
+
+plugins:
+  - techdocs-core

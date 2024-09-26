@@ -1,0 +1,2 @@
+# Prevents test file changes from triggering a rebuild while running a `skaffold dev` command
+/test

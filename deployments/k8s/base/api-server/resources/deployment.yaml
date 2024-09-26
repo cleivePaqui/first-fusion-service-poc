@@ -1,0 +1,92 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-template-deploy
+  labels:
+    app: api-template-deploy
+    name: api-template-deploy
+    component: api-template-deploy
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-template-deploy
+      component: api-template-deploy
+      version: v1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  template:
+    metadata:
+      labels:
+        app: api-template-deploy
+        name: api-template-deploy
+        component: api-template-deploy
+        version: v1
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "1323"
+        proxy.istio.io/config: |
+          holdApplicationUntilProxyStarts: true
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: api-template-deploy
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: "component"
+                      operator: In
+                      values:
+                        - api-template-deploy
+                topologyKey: kubernetes.io/hostname
+      serviceAccountName: api-template-service-account
+      containers:
+        - name: api-template
+          image: api-template
+          ports:
+            - name: http
+              containerPort: 1323
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 1323
+            initialDelaySeconds: 15
+          readinessProbe:
+            initialDelaySeconds: 10
+            tcpSocket:
+              port: http
+          envFrom:
+            - configMapRef:
+                name: api-template-config
+          resources:
+            requests:
+              cpu: 300m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          imagePullPolicy: Always
+          terminationMessagePolicy: File
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1001
+            runAsGroup: 3000
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

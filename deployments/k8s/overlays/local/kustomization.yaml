@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - resources/localstack/deployment.yaml
+  - resources/localstack/service.yaml
+  - ../../base
+
+replicas:
+  - name: api-template-deploy
+    count: 1
+
+configMapGenerator:
+  - name: api-template-vars
+    namespace: fusion-api-template
+    behavior: merge
+    literals:
+      - API_HOST="api-template.local"
+
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      namespace: fusion-api-template
+      name: api-template-deploy
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/imagePullPolicy"
+        value: Never
+      - op: replace
+        path: "/spec/template/spec/topologySpreadConstraints/0/whenUnsatisfiable"
+        value: ScheduleAnyway
+  - target:
+      kind: Certificate
+      namespace: istio-system
+      name: api-template-cert
+    patch: |-
+      - op: replace
+        path: "/spec/issuerRef/name"
+        value: selfsigned-issuer

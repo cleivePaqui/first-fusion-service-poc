@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../../base
+
+images:
+- name: api-template
+  newName: 616350704275.dkr.ecr.eu-west-1.amazonaws.com/fusion/api-template-server
+  newTag: v0.0.0
+
+configMapGenerator:
+  - name: api-template-config
+    behavior: merge
+    literals:
+    - APP_LOG_LEVEL=debug

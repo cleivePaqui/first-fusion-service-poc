@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localstack
+spec:
+  selector:
+    matchLabels:
+      app: localstack
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: localstack
+    spec:
+      containers:
+        - name: localstack
+          image: localstack/localstack:1.3.1
+          ports:
+            - containerPort: 4566
+            - containerPort: 4510
+          env:
+            - name: EDGE_PORT
+              value: "4566"
+            - name: LOCALSTACK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: localstack
+                  key: apikey
+                  optional: true

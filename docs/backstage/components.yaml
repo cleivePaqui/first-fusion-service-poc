@@ -1,0 +1,30 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  namespace: rm
+  name: fusion-api-template
+  description: Fusion Api Template
+  tags:
+    - golang
+    - microservices
+    - fusion
+    - kubernetes
+    - fusionapitemplate
+  links:
+    - url: https://github.com/nable-fusion/fusion-api-template
+      title: github
+      icon: github
+  annotations:
+    backstage.io/techdocs-ref: url:https://github.com/nable-fusion/fusion-api-template/tree/main
+    github.com/project-slug: nable-fusion/fusion-api-template
+    jenkins.io/job-full-name: NSCommon:Fusion/fusion-api-template
+    jira/project-key: FSN
+spec:
+  type: service
+  lifecycle: experimental
+  owner: default/fusion
+  system: fusion-api-template
+  providesApis:
+    - get-health-check
+    - get-welcome-page

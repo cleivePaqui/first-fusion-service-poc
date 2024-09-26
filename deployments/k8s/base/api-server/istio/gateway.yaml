@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: api-template-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      # https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings
+      tls:
+        mode: SIMPLE
+        credentialName: api-template-cert
+      hosts:
+        - $(API_HOST)

@@ -1,0 +1,44 @@
+openapi: 3.0.1
+info:
+  title: Fusion Api Template
+  description: |
+    This is a template api.
+
+    Every response will provide at least the following headers:
+      `Cache-Control : no-store`
+    
+    Versioning of this API should use the first portion of the version number should be for breaking changes,
+    and that version likely should be incorporated somehow into endpoint routing to support simultaneous use
+    of pods of different API versions (e.g. with `/v1`, `/v2`, ... prefixes or a routing header).
+  version: 1.0.1
+servers:
+  - url: localhost:1323
+    description: Local API
+  - url: https://api-template.dev.cdo.system-monitor.com/
+    description: Dev API
+  - url: https://api-template.stg.cdo.system-monitor.com/
+    description: Staging API
+paths:
+  # ----------
+  /healthz:
+    get:
+      summary: Health check
+      description: Provides a no-content response for doing a health check on the microservice.
+      operationId: GetHealthCheck
+      responses:
+        '204':
+          description: OK, return service health check, no content
+        '503':
+          description: Unavailable, integration points may be unreachable, try again later
+  /:
+    get:
+      summary: Welcome page
+      description: Provides a visible landing page for the microservice.
+      operationId: GetWelcomePage
+      responses:
+        '200':
+          description: OK, return welcome page
+          content:
+            text/plain:
+              schema:
+                type: string

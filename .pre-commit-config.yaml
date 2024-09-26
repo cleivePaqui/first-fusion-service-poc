@@ -1,0 +1,35 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_stages:
+  - pre-commit
+  - pre-push
+default_install_hook_types:
+  - commit-msg
+  - pre-commit
+  - pre-push
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: check-yaml
+        args:
+          - '--allow-multiple-documents'
+  - repo: https://github.com/gitguardian/ggshield
+    rev: v1.20.0
+    hooks:
+      - id: ggshield
+        name: Detect secrets via GitGuardian
+        stages: [ pre-commit ]
+  - repo: local
+    hooks:
+      - id: commitizen
+        name: Format git commit message
+        entry: make
+        args: [ 'commitizen-run-check' ]
+        pass_filenames: false
+        language: system
+        stages: [ commit-msg ]

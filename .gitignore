@@ -1,0 +1,43 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# IDE
+.idea/
+.DS_Store
+.vscode/
+
+# Unit Test Output
+report.xml
+test_output.txt
+
+# Automated Test Output
+test/**/reports
+test/**/generated
+
+# terraform
+*.terraform/
+
+deployments/k8s/overlays/local/resources/cerberus-secrets.yaml
+deployments/k8s/overlays/local/resources/ca-secret.yaml
+deployments/k8s/overlays/local/resources/tls-secret.yaml
+
+certs/
+test/**/*.crt
+test/**/*.key
+/lib/
+/deployments/k8s/overlays/local/resources/localstack-api-key.yaml
+/metricsEnvelope.data
+/stateChangeEnvelope.data

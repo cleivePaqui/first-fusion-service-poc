@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - istio
+  - resources/namespace.yaml
+  - api-server
+
+commonLabels:
+  managed-by: kustomize
+  part-of: fusion
+
+vars:
+  - name: API_HOST
+    objref:
+      kind: ConfigMap
+      name: api-template-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.API_HOST
+
+configMapGenerator:
+  - name: api-template-vars
+    namespace: fusion-api-template
+    behavior: create
+    literals:
+      - API_HOST=""

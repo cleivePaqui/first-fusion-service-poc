@@ -1,0 +1,21 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: fusion-api-template
+  description: Fusion Api Template
+  namespace: rm
+  tags:
+    - fusion
+    - golang
+    - microservices
+    - kubernetes
+    - aws
+    - api
+    - fusiontemplate
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    jira/project-key: FSN
+spec:
+  owner: default/fusion
+  domain: monitoring

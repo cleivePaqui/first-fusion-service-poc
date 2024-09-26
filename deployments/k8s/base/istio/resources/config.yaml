@@ -1,0 +1,26 @@
+varReference:
+  # VirtualService support
+  - path: spec/hosts
+    kind: VirtualService
+    apiVersion: networking.istio.io/v1beta1
+
+  # Gateway support
+  - path: spec/servers/hosts
+    apiVersion: networking.istio.io/v1beta1
+    kind: Gateway
+
+  # Certificate support
+  - path: spec/dnsNames
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+  - path: spec/commonName
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+
+  # RequestAuthentication support
+  - path: spec/jwtRules/issuer
+    apiVersion: security.istio.io/v1beta1
+    kind: RequestAuthentication
+  - path: spec/jwtRules/jwksUri
+    apiVersion: security.istio.io/v1beta1
+    kind: RequestAuthentication

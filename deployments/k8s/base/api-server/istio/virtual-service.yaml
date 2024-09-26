@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-template-virtual-service
+spec:
+  hosts:
+    - $(API_HOST)
+  gateways:
+    - api-template-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: api-template-service
+            subset: v1
+            port:
+              number: 80

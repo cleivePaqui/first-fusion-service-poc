@@ -1,0 +1,24 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: fusion-api-template
+build:
+  artifacts:
+    - image: api-template
+      docker:
+        dockerfile: cmd/api-server/Dockerfile
+        buildArgs:
+          GITHUB_USERNAME: "{{.GITHUB_USERNAME}}"
+          GITHUB_PASSWORD: "{{.GITHUB_PASSWORD}}"
+deploy:
+  kubeContext: docker-desktop
+
+profiles:
+  - name: local
+    build:
+      local:
+        push: false
+    manifests:
+      kustomize:
+        paths:
+          - deployments/k8s/overlays/local

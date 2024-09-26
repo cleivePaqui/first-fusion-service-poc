@@ -1,0 +1,23 @@
+{
+  "Repo": "github.com/nable-fusion/fusion-api-template",
+  "TestPlanKey": "FSN-11581",
+
+  "Environments": [
+    {
+      "Name": "dev",
+      "Regions": [
+        {
+          "Name": "eu-west-1"
+        }
+      ]
+    },
+    {
+      "Name": "stg",
+      "Regions": [
+        {
+          "Name": "eu-west-1"
+        }
+      ]
+    }
+  ]
+}
