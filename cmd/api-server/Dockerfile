@@ -17,7 +17,7 @@ COPY . .
 RUN go build -buildvcs=false -o /go/bin/api-server ./cmd/api-server/
 
 # Step 2 - Run application
-FROM alpine:3.14
+FROM alpine:3.20
 COPY --chown=65534:65534 --from=builder /go/bin/api-server .
 USER 65534
 
