@@ -1,5 +1,5 @@
 # Step 1 - Build executable
-FROM public.ecr.aws/docker/library/golang:1.21.0-alpine3.18 AS builder
+FROM public.ecr.aws/docker/library/golang:1.22.3-alpine3.18 AS builder
 WORKDIR /go/src/app
 
 COPY go.mod go.sum ./
@@ -17,7 +17,7 @@ COPY . .
 RUN go build -buildvcs=false -o /go/bin/api-server ./cmd/api-server/
 
 # Step 2 - Run application
-FROM alpine:3.14
+FROM alpine:3.20
 COPY --chown=65534:65534 --from=builder /go/bin/api-server .
 USER 65534
 
